@@ -134,14 +134,19 @@ const Upload = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (emailState.isValid && codeState.isValid && isChecked && choosedDay <= actualDay && choosedMonth <= actualMonth) {
+    if (emailState.isValid && codeState.isValid && isChecked) {
+
       const item = {
         email: emailState.value,
         code: codeState.value,
         purchase_time: actualYear + "-" + choosedMonth + "-" + choosedDay + " " + hour + ":" + minute,
       };
-
-      props.addCodeHandler(item);
+      
+      if(choosedMonth === actualMonth && choosedDay <= actualDay) {
+        props.addCodeHandler(item);
+      } else if(choosedMonth < actualMonth) {
+        props.addCodeHandler(item);
+      }
     }
   };
 
